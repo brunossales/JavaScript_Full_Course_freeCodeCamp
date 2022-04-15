@@ -9,7 +9,7 @@ const inputTab = document.getElementById("tab-btn")
 
 //`${variavel} texto `
 
-//JSON.parse - converte arquivo JSON em objeto
+//JSON.parse - convert to arquived JSON in object
 const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"))
 
 if(leadsFromLocalStorage){
@@ -18,6 +18,11 @@ if(leadsFromLocalStorage){
 }
 
 inputTab.addEventListener("click", function(){
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        myLeads.push(tabs[0].url)
+        localStorage.setItem("myLeads", JSON.stringify(myLeads))
+        render(myLeads)
+    })
     
 })
 
@@ -56,3 +61,6 @@ inputBtn.addEventListener("click", function () {
     localStorage.setItem("myLeads", JSON.stringify(myLeads))
     render(myLeads)
 })
+
+//let pode ser reatribuida 
+//const não pode, por isso é uma constante 
